@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { FiChevronDown } from 'react-icons/fi'
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
+import { DottedMap } from '@/components/ui/dotted-map'
 
 export function Hero() {
   const [scrollY, setScrollY] = useState(0)
@@ -31,6 +32,20 @@ export function Hero() {
       ref={heroRef}
       className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-navy-800 via-navy-800 to-navy-900"
     >
+      {/* Dotted Map Background */}
+      <div className="absolute inset-0 opacity-20">
+        <DottedMap
+          width={300}
+          height={150}
+          mapSamples={5000}
+          dotRadius={0.3}
+          className="text-navy-400"
+          style={{
+            transform: `translateY(${scrollY * 0.5}px)`,
+          }}
+        />
+      </div>
+
       {/* Parallax background elements */}
       <div
         className="absolute inset-0 opacity-10"
