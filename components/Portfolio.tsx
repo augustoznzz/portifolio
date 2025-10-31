@@ -27,7 +27,7 @@ const projects: Project[] = [
       { name: 'TypeScript', icon: SiTypescript, color: 'text-blue-600' },
       { name: 'HTML', icon: SiHtml5, color: 'text-orange-500' },
     ],
-    githubUrl: 'https://github.com',
+    githubUrl: 'https://github.com/augustoznzz',
   },
 ]
 

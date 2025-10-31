@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
 import { FiSend, FiGithub, FiLinkedin } from 'react-icons/fi'
+import emailjs from '@emailjs/browser'
 
 export function Contact() {
   const ref = useRef(null)
@@ -14,17 +15,50 @@ export function Contact() {
     message: '',
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    
-    // Simulação de envio - substitua por integração real (ex: Formspree, EmailJS)
-    setTimeout(() => {
-      alert('Mensagem enviada com sucesso! (Esta é uma demonstração)')
+    setSubmitStatus('idle')
+
+    try {
+      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || ''
+      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || ''
+      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || ''
+
+      if (!serviceId || !templateId || !publicKey) {
+        throw new Error('Configuração do EmailJS não encontrada')
+      }
+
+      await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          message: formData.message,
+          to_email: 'augustozuanazzi03@gmail.com',
+        },
+        publicKey
+      )
+
+      setSubmitStatus('success')
       setFormData({ name: '', email: '', message: '' })
+      
+      setTimeout(() => {
+        setSubmitStatus('idle')
+      }, 5000)
+    } catch (error) {
+      console.error('Erro ao enviar mensagem:', error)
+      setSubmitStatus('error')
+      
+      setTimeout(() => {
+        setSubmitStatus('idle')
+      }, 5000)
+    } finally {
       setIsSubmitting(false)
-    }, 1000)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -141,6 +175,27 @@ export function Contact() {
                 </>
               )}
             </motion.button>
+
+            {/* Mensagens de Status */}
+            {submitStatus === 'success' && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mt-4 p-4 bg-green-500/20 border border-green-500 rounded-xl text-green-400 text-center"
+              >
+                Mensagem enviada com sucesso! Entrarei em contato em breve.
+              </motion.div>
+            )}
+
+            {submitStatus === 'error' && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mt-4 p-4 bg-red-500/20 border border-red-500 rounded-xl text-red-400 text-center"
+              >
+                Erro ao enviar mensagem. Por favor, tente novamente ou entre em contato diretamente pelo email.
+              </motion.div>
+            )}
           </form>
 
           {/* Social Links */}
@@ -151,7 +206,7 @@ export function Contact() {
             className="mt-12 flex justify-center gap-6"
           >
             <a
-              href="https://github.com"
+              href="https://github.com/augustoznzz"
               target="_blank"
               rel="noopener noreferrer"
               className="w-12 h-12 rounded-full bg-navy-700 flex items-center justify-center text-white hover:bg-white hover:text-navy-800 transition-all duration-300 hover:scale-110"
@@ -160,7 +215,7 @@ export function Contact() {
               <FiGithub className="w-6 h-6" />
             </a>
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/augusto-zuanazzi-a033761a0/"
               target="_blank"
               rel="noopener noreferrer"
               className="w-12 h-12 rounded-full bg-navy-700 flex items-center justify-center text-white hover:bg-white hover:text-navy-800 transition-all duration-300 hover:scale-110"
