@@ -3,7 +3,7 @@
 import { motion, AnimatePresence, useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
 import { FiExternalLink, FiGithub, FiChevronLeft, FiChevronRight } from 'react-icons/fi'
-import { SiTypescript, SiHtml5 } from 'react-icons/si'
+import { SiTypescript, SiHtml5, SiReact } from 'react-icons/si'
 
 interface Project {
   id: number
@@ -21,11 +21,24 @@ const projects: Project[] = [
     id: 1,
     title: 'SaaS Janete',
     description: 'Sistema SaaS desenvolvido para a plataforma Janete',
-    longDescription: 'Sistema SaaS completo desenvolvido com TypeScript e HTML, oferecendo uma solução moderna e eficiente.',
+    longDescription: 'Sistema SaaS completo desenvolvido com TypeScript, React e HTML, oferecendo uma solução moderna e eficiente.',
     images: ['/janete1.png', '/janete2.png', '/janete3.png'],
     technologies: [
       { name: 'TypeScript', icon: SiTypescript, color: 'text-blue-600' },
+      { name: 'React', icon: SiReact, color: 'text-cyan-500' },
       { name: 'HTML', icon: SiHtml5, color: 'text-orange-500' },
+    ],
+    githubUrl: 'https://github.com/augustoznzz',
+  },
+  {
+    id: 2,
+    title: 'Calculadora de Juros Compostos',
+    description: 'Calculadora completa de juros compostos com gráficos e análise detalhada',
+    longDescription: 'Aplicação web completa para cálculo de juros compostos, incluindo visualizações gráficas, tabelas de evolução, cálculo de inflação e análise de rentabilidade. Desenvolvida com TypeScript e React.',
+    images: ['/calcc.png', '/calcc2.png', '/calcc3.png'],
+    technologies: [
+      { name: 'TypeScript', icon: SiTypescript, color: 'text-blue-600' },
+      { name: 'React', icon: SiReact, color: 'text-cyan-500' },
     ],
     githubUrl: 'https://github.com/augustoznzz',
   },
@@ -71,7 +84,7 @@ export function Portfolio() {
             Projetos
           </motion.h2>
 
-          <div className="grid grid-cols-1 gap-8 max-w-2xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
             {projects.map((project, index) => (
                 <motion.div
                   key={project.id}
