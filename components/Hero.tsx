@@ -91,25 +91,8 @@ export function Hero() {
               linear-gradient(90deg, rgba(94, 179, 246, 0.18) 1px, transparent 1px)
             `,
             backgroundSize: '60px 60px',
-            transform: 'translateZ(0px) rotateX(4deg) rotateY(-0.5deg)',
+            transform: 'translateZ(3px) rotateX(4deg) rotateY(-0.5deg)',
             transformOrigin: 'center center',
-            maskImage: 'radial-gradient(ellipse 80% 50% at 50% 0%, black 70%, transparent 110%)',
-            WebkitMaskImage: 'radial-gradient(ellipse 80% 50% at 50% 0%, black 70%, transparent 110%)',
-          }}
-        />
-        
-        {/* Subtle lighting effect */}
-        <div 
-          className="absolute inset-0 opacity-[0.05]"
-          style={{
-            backgroundImage: `
-              radial-gradient(ellipse at 50% 0%, rgba(94, 179, 246, 0.2) 0%, transparent 50%),
-              linear-gradient(to bottom, rgba(94, 179, 246, 0.08) 0%, transparent 30%)
-            `,
-            backgroundSize: '100% 100%, 100% 100%',
-            transform: 'translateZ(-30px) rotateX(5deg)',
-            transformOrigin: 'center center',
-            animation: 'grid3DLight 20s ease-in-out infinite',
             maskImage: 'radial-gradient(ellipse 80% 50% at 50% 0%, black 70%, transparent 110%)',
             WebkitMaskImage: 'radial-gradient(ellipse 80% 50% at 50% 0%, black 70%, transparent 110%)',
           }}
