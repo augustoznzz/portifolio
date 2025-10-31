@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" suppressHydrationWarning className="dark">
       <head>
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="icon" href="" type="image/svg+xml" />
       </head>
       <body className="dark">
         <ThemeProvider>
