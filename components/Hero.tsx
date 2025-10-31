@@ -4,21 +4,28 @@ import { motion } from 'framer-motion'
 import { FiChevronDown } from 'react-icons/fi'
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
-import { DottedMap } from '@/components/ui/dotted-map'
 
 export function Hero() {
   const [scrollY, setScrollY] = useState(0)
   const heroRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    let ticking = false
+    
     const handleScroll = () => {
-      if (heroRef.current) {
-        const rect = heroRef.current.getBoundingClientRect()
-        setScrollY(-rect.top * 0.3)
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          if (heroRef.current) {
+            const rect = heroRef.current.getBoundingClientRect()
+            setScrollY(-rect.top * 0.3)
+          }
+          ticking = false
+        })
+        ticking = true
       }
     }
 
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
@@ -32,16 +39,79 @@ export function Hero() {
       ref={heroRef}
       className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-navy-800 via-navy-800 to-navy-900"
     >
-      {/* Dotted Map Background */}
-      <div className="absolute inset-0 opacity-20">
-        <DottedMap
-          width={300}
-          height={150}
-          mapSamples={5000}
-          dotRadius={0.3}
-          className="text-navy-400"
+      {/* 3D Grid Container with subtle perspective */}
+      <div 
+        className="absolute inset-0"
+        style={{
+          perspective: '2000px',
+          perspectiveOrigin: '50% 50%',
+          transformStyle: 'preserve-3d',
+        }}
+      >
+        {/* Back layer - Subtle depth */}
+        <div 
+          className="absolute inset-0 opacity-[0.06]"
           style={{
-            transform: `translateY(${scrollY * 0.5}px)`,
+            backgroundImage: `
+              linear-gradient(rgba(94, 179, 246, 0.12) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(94, 179, 246, 0.12) 1px, transparent 1px)
+            `,
+            backgroundSize: '60px 60px',
+            transform: 'translateZ(-120px) rotateX(8deg) rotateY(-2deg)',
+            transformOrigin: 'center center',
+            animation: 'grid3DMove 40s linear infinite reverse',
+            maskImage: 'radial-gradient(ellipse 80% 50% at 50% 0%, black 70%, transparent 110%)',
+            WebkitMaskImage: 'radial-gradient(ellipse 80% 50% at 50% 0%, black 70%, transparent 110%)',
+          }}
+        />
+        
+        {/* Middle layer - Depth */}
+        <div 
+          className="absolute inset-0 opacity-[0.08]"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(94, 179, 246, 0.15) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(94, 179, 246, 0.15) 1px, transparent 1px)
+            `,
+            backgroundSize: '60px 60px',
+            transform: 'translateZ(-60px) rotateX(6deg) rotateY(-1deg)',
+            transformOrigin: 'center center',
+            animation: 'grid3DMove 35s linear infinite',
+            maskImage: 'radial-gradient(ellipse 80% 50% at 50% 0%, black 70%, transparent 110%)',
+            WebkitMaskImage: 'radial-gradient(ellipse 80% 50% at 50% 0%, black 70%, transparent 110%)',
+          }}
+        />
+        
+        {/* Front layer - Main grid */}
+        <div 
+          className="absolute inset-0 opacity-[0.1]"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(94, 179, 246, 0.18) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(94, 179, 246, 0.18) 1px, transparent 1px)
+            `,
+            backgroundSize: '60px 60px',
+            transform: 'translateZ(0px) rotateX(4deg) rotateY(-0.5deg)',
+            transformOrigin: 'center center',
+            maskImage: 'radial-gradient(ellipse 80% 50% at 50% 0%, black 70%, transparent 110%)',
+            WebkitMaskImage: 'radial-gradient(ellipse 80% 50% at 50% 0%, black 70%, transparent 110%)',
+          }}
+        />
+        
+        {/* Subtle lighting effect */}
+        <div 
+          className="absolute inset-0 opacity-[0.05]"
+          style={{
+            backgroundImage: `
+              radial-gradient(ellipse at 50% 0%, rgba(94, 179, 246, 0.2) 0%, transparent 50%),
+              linear-gradient(to bottom, rgba(94, 179, 246, 0.08) 0%, transparent 30%)
+            `,
+            backgroundSize: '100% 100%, 100% 100%',
+            transform: 'translateZ(-30px) rotateX(5deg)',
+            transformOrigin: 'center center',
+            animation: 'grid3DLight 20s ease-in-out infinite',
+            maskImage: 'radial-gradient(ellipse 80% 50% at 50% 0%, black 70%, transparent 110%)',
+            WebkitMaskImage: 'radial-gradient(ellipse 80% 50% at 50% 0%, black 70%, transparent 110%)',
           }}
         />
       </div>
@@ -79,7 +149,8 @@ export function Hero() {
                   width={160}
                   height={160}
                   className="w-full h-full object-cover rounded-full"
-                  unoptimized
+                  priority
+                  loading="eager"
                 />
               </div>
               <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-green-500 rounded-full border-4 border-navy-800"></div>

@@ -4,7 +4,6 @@ import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
 import { FiSend, FiGithub, FiLinkedin } from 'react-icons/fi'
-import emailjs from '@emailjs/browser'
 
 export function Contact() {
   const ref = useRef(null)
@@ -23,6 +22,9 @@ export function Contact() {
     setSubmitStatus('idle')
 
     try {
+      // Dynamic import of EmailJS only when form is submitted
+      const emailjs = (await import('@emailjs/browser')).default
+      
       const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || ''
       const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || ''
       const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || ''

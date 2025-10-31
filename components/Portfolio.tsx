@@ -4,6 +4,7 @@ import { motion, AnimatePresence, useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
 import { FiExternalLink, FiGithub, FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 import { SiTypescript, SiHtml5, SiReact } from 'react-icons/si'
+import Image from 'next/image'
 
 interface Project {
   id: number
@@ -95,10 +96,13 @@ export function Portfolio() {
                   onClick={() => handleProjectSelect(project)}
                 >
                   <div className="relative h-64 overflow-hidden">
-                    <img
+                    <Image
                       src={project.images[0]}
                       alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover group-hover:scale-110 transition-transform duration-500"
+                      loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-navy-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -154,16 +158,23 @@ export function Portfolio() {
               {/* Carrossel de Imagens */}
               <div className="relative h-96 overflow-hidden rounded-t-2xl">
                 <AnimatePresence mode="wait">
-                  <motion.img
+                  <motion.div
                     key={currentImageIndex}
                     initial={{ opacity: 0, x: 50 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -50 }}
                     transition={{ duration: 0.3 }}
-                    src={selectedProject.images[currentImageIndex]}
-                    alt={`${selectedProject.title} - Imagem ${currentImageIndex + 1}`}
-                    className="w-full h-full object-contain bg-navy-900"
-                  />
+                    className="relative w-full h-full bg-navy-900"
+                  >
+                    <Image
+                      src={selectedProject.images[currentImageIndex]}
+                      alt={`${selectedProject.title} - Imagem ${currentImageIndex + 1}`}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 768px"
+                      className="object-contain"
+                      loading="eager"
+                    />
+                  </motion.div>
                 </AnimatePresence>
                 
                 {/* Botões de Navegação */}

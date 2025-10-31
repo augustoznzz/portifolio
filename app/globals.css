@@ -70,3 +70,35 @@ body.dark {
   transform: translateY(0);
 }
 
+/* Grid animation */
+@keyframes gridMove {
+  0% {
+    background-position: 0 0, 0 0;
+  }
+  100% {
+    background-position: 120px 120px, 120px 120px;
+  }
+}
+
+/* 3D Grid animation - Creates depth movement */
+@keyframes grid3DMove {
+  0% {
+    background-position: 0 0, 0 0;
+  }
+  100% {
+    background-position: 60px 60px, 60px 60px;
+  }
+}
+
+/* 3D Grid lighting animation - Simulates subtle light movement */
+@keyframes grid3DLight {
+  0%, 100% {
+    opacity: 0.04;
+    transform: translateZ(-30px) rotateX(5deg) translateY(0px);
+  }
+  50% {
+    opacity: 0.08;
+    transform: translateZ(-30px) rotateX(5deg) translateY(-10px);
+  }
+}
+

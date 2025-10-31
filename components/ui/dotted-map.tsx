@@ -33,13 +33,18 @@ export function DottedMap({
   className,
   style,
 }: DottedMapProps) {
-  const { points, addMarkers } = createMap({
-    width,
-    height,
-    mapSamples,
-  })
-
-  const processedMarkers = addMarkers(markers)
+  // Memoize that includes both map creation and marker processing
+  const { points, processedMarkers } = React.useMemo(() => {
+    const map = createMap({
+      width,
+      height,
+      mapSamples,
+    })
+    return {
+      points: map.points,
+      processedMarkers: map.addMarkers(markers),
+    }
+  }, [width, height, mapSamples, markers])
 
   // Compute stagger helpers in a single, simple pass
   const { xStep, yToRowIndex } = React.useMemo(() => {
