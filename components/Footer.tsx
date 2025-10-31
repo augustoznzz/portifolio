@@ -14,7 +14,7 @@ export function Footer() {
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm">
-            © {currentYear} João Silva. Todos os direitos reservados.
+            © {currentYear} Augusto Pires Zuanazzi. Todos os direitos reservados.
           </p>
           <button
             onClick={scrollToTop}

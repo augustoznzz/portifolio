@@ -5,7 +5,7 @@ import { ThemeProvider } from '@/components/ThemeProvider'
 
 export const metadata: Metadata = {
   title: 'Portfólio | Desenvolvedor Backend',
-  description: 'Portfólio pessoal de desenvolvedor backend. Criar. Evoluir. Inovar.',
+  description: 'Portfólio pessoal de desenvolvedor backend.',
   keywords: 'desenvolvedor, backend, portfólio, programador, web developer',
   authors: [{ name: 'Seu Nome' }],
   openGraph: {

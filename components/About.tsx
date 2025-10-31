@@ -5,19 +5,15 @@ import { useInView } from 'framer-motion'
 import { useRef } from 'react'
 import { 
   SiPython, 
-  SiReact, 
   SiNodedotjs, 
-  SiTypescript, 
-  SiDocker,
+  SiGo,
   SiGit
 } from 'react-icons/si'
 
 const skills = [
   { name: 'Python', icon: SiPython, color: 'text-blue-500' },
-  { name: 'React', icon: SiReact, color: 'text-cyan-500' },
   { name: 'Node.js', icon: SiNodedotjs, color: 'text-green-500' },
-  { name: 'TypeScript', icon: SiTypescript, color: 'text-blue-600' },
-  { name: 'Docker', icon: SiDocker, color: 'text-blue-400' },
+  { name: 'Golang', icon: SiGo, color: 'text-cyan-500' },
   { name: 'Git', icon: SiGit, color: 'text-orange-500' },
 ]
 
@@ -65,7 +61,7 @@ export function About() {
             <h3 className="text-2xl font-semibold mb-6 text-center text-white">
               Habilidades
             </h3>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {skills.map((skill, index) => {
                 const Icon = skill.icon
                 return (

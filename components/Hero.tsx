@@ -75,7 +75,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.6 }}
-            className="text-5xl md:text-7xl font-bold mb-4 text-white"
+            className="text-6xl md:text-6xl font-bold mb-4 text-white"
           >
             Augusto Pires Zuanazzi
           </motion.h1>
@@ -97,9 +97,6 @@ export function Hero() {
             transition={{ delay: 0.8, duration: 0.6 }}
             className="flex justify-center gap-4 mb-12 text-sm md:text-base text-white opacity-70"
           >
-            <span className="opacity-70">Criar.</span>
-            <span className="opacity-70">Evoluir.</span>
-            <span className="opacity-70">Inovar.</span>
           </motion.div>
 
           {/* CTA Button */}
