@@ -31,9 +31,38 @@ Configure as seguintes variáveis de ambiente no painel do Netlify:
 Nova mensagem do portfólio - {{from_name}}
 ```
 
-**Body:**
+**Body (HTML):**
+```html
+<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+  <h2 style="color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px;">
+    Nova Mensagem do Portfólio
+  </h2>
+  
+  <div style="background-color: #f5f5f5; padding: 20px; border-radius: 5px; margin: 20px 0;">
+    <p><strong>Nome:</strong> {{from_name}}</p>
+    <p><strong>Email:</strong> {{from_email}}</p>
+  </div>
+  
+  <div style="margin: 20px 0;">
+    <h3 style="color: #333;">Mensagem:</h3>
+    <p style="background-color: #fff; padding: 15px; border-left: 4px solid #007bff; white-space: pre-wrap;">
+      {{message}}
+    </p>
+  </div>
+  
+  <hr style="border: none; border-top: 1px solid #ddd; margin: 30px 0;" />
+  
+  <p style="color: #666; font-size: 12px;">
+    Esta mensagem foi enviada através do formulário de contato do portfólio.
+  </p>
+</div>
 ```
-De: {{from_name}}
+
+**Body (Texto Simples):**
+```
+Nova Mensagem do Portfólio
+
+Nome: {{from_name}}
 Email: {{from_email}}
 
 Mensagem:
@@ -43,7 +72,8 @@ Mensagem:
 Esta mensagem foi enviada através do formulário de contato do portfólio.
 ```
 
-4. **Copie o Template ID** (aparece na URL ou no canto superior direito)
+4. **Configure o campo "To Email"** com: `augustozuanazzi03@gmail.com`
+5. **Copie o Template ID** (aparece na URL ou no canto superior direito)
 
 ### Passo 4: Obter Public Key
 1. Vá em **Account** > **General**
@@ -80,5 +110,17 @@ Após configurar:
 
 O email de destino está configurado como: **augustozuanazzi03@gmail.com**
 
-Este valor está hardcoded no código e será usado no template do EmailJS.
+Este valor deve ser configurado no template do EmailJS no campo "To Email".
 
+## 🔒 Segurança
+
+- **NUNCA** commite as variáveis de ambiente no Git
+- Mantenha o `.env.local` no `.gitignore`
+- Use apenas variáveis de ambiente no Netlify (não as exponha no código)
+- A Public Key é pública por design, mas mantenha as outras credenciais seguras
+
+## 📚 Recursos Úteis
+
+- [EmailJS Documentation](https://www.emailjs.com/docs/)
+- [EmailJS Dashboard](https://dashboard.emailjs.com/)
+- [EmailJS Templates Guide](https://www.emailjs.com/docs/user-guide/create-email-templates/)
