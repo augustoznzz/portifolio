@@ -1,17 +1,16 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { useInView } from 'framer-motion'
+import { motion, AnimatePresence, useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
-import { FiExternalLink, FiGithub } from 'react-icons/fi'
-import { SiPython, SiReact, SiNodedotjs, SiTypescript } from 'react-icons/si'
+import { FiExternalLink, FiGithub, FiChevronLeft, FiChevronRight } from 'react-icons/fi'
+import { SiTypescript, SiHtml5 } from 'react-icons/si'
 
 interface Project {
   id: number
   title: string
   description: string
   longDescription: string
-  image: string
+  images: string[]
   technologies: { name: string; icon: any; color: string }[]
   githubUrl: string
   liveUrl?: string
@@ -20,52 +19,13 @@ interface Project {
 const projects: Project[] = [
   {
     id: 1,
-    title: 'API RESTful E-commerce',
-    description: 'Sistema completo de e-commerce com autenticação e pagamentos',
-    longDescription: 'API RESTful desenvolvida em Python com FastAPI, incluindo sistema de autenticação JWT, gerenciamento de produtos, carrinho de compras e integração com gateway de pagamento.',
-    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop',
-    technologies: [
-      { name: 'Python', icon: SiPython, color: 'text-blue-500' },
-      { name: 'FastAPI', icon: SiPython, color: 'text-green-500' },
-    ],
-    githubUrl: 'https://github.com',
-    liveUrl: 'https://example.com',
-  },
-  {
-    id: 2,
-    title: 'Dashboard Analytics',
-    description: 'Dashboard interativo com visualizações em tempo real',
-    longDescription: 'Dashboard desenvolvido com React e TypeScript, conectado a uma API Node.js para processamento de dados em tempo real e visualizações interativas.',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop',
-    technologies: [
-      { name: 'React', icon: SiReact, color: 'text-cyan-500' },
-      { name: 'TypeScript', icon: SiTypescript, color: 'text-blue-600' },
-      { name: 'Node.js', icon: SiNodedotjs, color: 'text-green-500' },
-    ],
-    githubUrl: 'https://github.com',
-    liveUrl: 'https://example.com',
-  },
-  {
-    id: 3,
-    title: 'Sistema de Microserviços',
-    description: 'Arquitetura de microserviços escalável com Docker',
-    longDescription: 'Sistema distribuído com múltiplos microserviços comunicando via message queue, containerizado com Docker e orquestrado para alta disponibilidade.',
-    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&h=600&fit=crop',
-    technologies: [
-      { name: 'Node.js', icon: SiNodedotjs, color: 'text-green-500' },
-      { name: 'Docker', icon: SiPython, color: 'text-blue-400' },
-    ],
-    githubUrl: 'https://github.com',
-  },
-  {
-    id: 4,
-    title: 'API de Autenticação',
-    description: 'Sistema seguro de autenticação com refresh tokens',
-    longDescription: 'API de autenticação robusta implementando OAuth2, refresh tokens, rate limiting e auditoria de segurança para aplicações críticas.',
-    image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&h=600&fit=crop',
+    title: 'SaaS Janete',
+    description: 'Sistema SaaS desenvolvido para a plataforma Janete',
+    longDescription: 'Sistema SaaS completo desenvolvido com TypeScript e HTML, oferecendo uma solução moderna e eficiente.',
+    images: ['/janete1.png', '/janete2.png', '/janete3.png'],
     technologies: [
       { name: 'TypeScript', icon: SiTypescript, color: 'text-blue-600' },
-      { name: 'Node.js', icon: SiNodedotjs, color: 'text-green-500' },
+      { name: 'HTML', icon: SiHtml5, color: 'text-orange-500' },
     ],
     githubUrl: 'https://github.com',
   },
@@ -75,6 +35,24 @@ export function Portfolio() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+
+  const nextImage = () => {
+    if (selectedProject) {
+      setCurrentImageIndex((prev) => (prev + 1) % selectedProject.images.length)
+    }
+  }
+
+  const prevImage = () => {
+    if (selectedProject) {
+      setCurrentImageIndex((prev) => (prev - 1 + selectedProject.images.length) % selectedProject.images.length)
+    }
+  }
+
+  const handleProjectSelect = (project: Project) => {
+    setSelectedProject(project)
+    setCurrentImageIndex(0)
+  }
 
   return (
     <>
@@ -93,7 +71,7 @@ export function Portfolio() {
             Projetos
           </motion.h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 gap-8 max-w-2xl mx-auto">
             {projects.map((project, index) => (
                 <motion.div
                   key={project.id}
@@ -101,11 +79,11 @@ export function Portfolio() {
                   animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                   transition={{ delay: index * 0.1, duration: 0.6 }}
                   className="group relative overflow-hidden rounded-2xl bg-navy-800 shadow-soft hover:shadow-lg transition-all duration-300 cursor-pointer"
-                  onClick={() => setSelectedProject(project)}
+                  onClick={() => handleProjectSelect(project)}
                 >
                   <div className="relative h-64 overflow-hidden">
                     <img
-                      src={project.image}
+                      src={project.images[0]}
                       alt={project.title}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     />
@@ -123,7 +101,7 @@ export function Portfolio() {
                       {project.description}
                     </p>
                     <div className="flex flex-wrap gap-2">
-                      {project.technologies.slice(0, 3).map((tech) => {
+                      {project.technologies.map((tech) => {
                         const Icon = tech.icon
                         return (
                           <span
@@ -157,20 +135,79 @@ export function Portfolio() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             onClick={(e) => e.stopPropagation()}
-            className="bg-navy-800 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
+            className="bg-navy-800 rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
           >
-            <div className="relative h-64">
-              <img
-                src={selectedProject.image}
-                alt={selectedProject.title}
-                className="w-full h-full object-cover"
-              />
-              <button
-                onClick={() => setSelectedProject(null)}
-                className="absolute top-4 right-4 w-10 h-10 rounded-full bg-navy-700 shadow-lg flex items-center justify-center text-white hover:scale-110 transition-transform"
-              >
-                ×
-              </button>
+            <div className="relative">
+              {/* Carrossel de Imagens */}
+              <div className="relative h-96 overflow-hidden rounded-t-2xl">
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={currentImageIndex}
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -50 }}
+                    transition={{ duration: 0.3 }}
+                    src={selectedProject.images[currentImageIndex]}
+                    alt={`${selectedProject.title} - Imagem ${currentImageIndex + 1}`}
+                    className="w-full h-full object-contain bg-navy-900"
+                  />
+                </AnimatePresence>
+                
+                {/* Botões de Navegação */}
+                {selectedProject.images.length > 1 && (
+                  <>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        prevImage()
+                      }}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-navy-700/80 hover:bg-navy-700 shadow-lg flex items-center justify-center text-white transition-all hover:scale-110 z-10"
+                    >
+                      <FiChevronLeft className="w-5 h-5" />
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        nextImage()
+                      }}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-navy-700/80 hover:bg-navy-700 shadow-lg flex items-center justify-center text-white transition-all hover:scale-110 z-10"
+                    >
+                      <FiChevronRight className="w-5 h-5" />
+                    </button>
+                  </>
+                )}
+
+                {/* Indicadores de Slide */}
+                {selectedProject.images.length > 1 && (
+                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+                    {selectedProject.images.map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          setCurrentImageIndex(index)
+                        }}
+                        className={`w-2 h-2 rounded-full transition-all ${
+                          index === currentImageIndex
+                            ? 'bg-white w-8'
+                            : 'bg-white/50 hover:bg-white/75'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                )}
+
+                {/* Botão Fechar */}
+                <button
+                  onClick={() => {
+                    setSelectedProject(null)
+                    setCurrentImageIndex(0)
+                  }}
+                  className="absolute top-4 right-4 w-10 h-10 rounded-full bg-navy-700/80 hover:bg-navy-700 shadow-lg flex items-center justify-center text-white hover:scale-110 transition-transform z-10"
+                >
+                  ×
+                </button>
+              </div>
             </div>
             <div className="p-8">
               <h3 className="text-3xl font-bold mb-4 text-white">
