@@ -40,14 +40,14 @@ export function About() {
 
           <div className="prose prose-lg max-w-none mb-12">
             <p className="text-white leading-relaxed mb-4 opacity-90">
-              Sou um desenvolvedor backend apaixonado por criar soluções robustas e escaláveis. 
-              Com experiência em arquitetura de sistemas e desenvolvimento de APIs, trabalho 
-              para transformar ideias em código funcional e eficiente.
+              Atualmente sou um estudante de engenharia de software e apaixonado por criar soluções e 
+              buscando desenvolver experiência para transformar ideias em código funcional e eficiente.
             </p>
             <p className="text-white leading-relaxed opacity-90">
-              Minha jornada na programação começou com a curiosidade de entender como as coisas 
-              funcionam por trás dos bastidores. Hoje, me dedico a construir aplicações que 
-              não apenas funcionam, mas que fazem a diferença na vida das pessoas.
+              Minha jornada na programação começou com o interesse pelo trabalho do meu pai e a 
+              curiosidade de entender como as coisas funcionam nesse universo.
+              Hoje, me dedico a construir aplicações que não apenas funcionam, 
+              mas que fazem a diferença na vida das pessoas.
             </p>
           </div>
 

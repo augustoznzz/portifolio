@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
-import { FiSend, FiGithub, FiLinkedin, FiInstagram } from 'react-icons/fi'
+import { FiSend, FiGithub, FiLinkedin } from 'react-icons/fi'
 
 export function Contact() {
   const ref = useRef(null)
@@ -119,7 +119,7 @@ export function Contact() {
                 onChange={handleChange}
                 required
                 rows={6}
-                className="w-full px-4 py-3 rounded-xl border border-navy-200 dark:border-navy-700 bg-white dark:bg-navy-700 text-navy-800 dark:text-navy-100 focus:outline-none focus:ring-2 focus:ring-accent-light transition-all resize-none"
+                className="w-full px-4 py-3 rounded-xl border border-navy-700 bg-navy-700 text-white placeholder-white placeholder-opacity-50 focus:outline-none focus:ring-2 focus:ring-accent-light transition-all resize-none"
                 placeholder="Sua mensagem..."
               />
             </motion.div>
@@ -167,15 +167,6 @@ export function Contact() {
               aria-label="LinkedIn"
             >
               <FiLinkedin className="w-6 h-6" />
-            </a>
-            <a
-              href="https://instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-12 h-12 rounded-full bg-navy-700 flex items-center justify-center text-white hover:bg-white hover:text-navy-800 transition-all duration-300 hover:scale-110"
-              aria-label="Instagram"
-            >
-              <FiInstagram className="w-6 h-6" />
             </a>
           </motion.div>
         </motion.div>

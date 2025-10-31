@@ -33,7 +33,7 @@ export function Hero() {
     >
       {/* Parallax background elements */}
       <div
-        className="absolute inset-0 opacity-10 dark:opacity-5"
+        className="absolute inset-0 opacity-10"
         style={{
           transform: `translateY(${scrollY}px)`,
         }}
@@ -64,6 +64,7 @@ export function Hero() {
                   width={160}
                   height={160}
                   className="w-full h-full object-cover rounded-full"
+                  unoptimized
                 />
               </div>
               <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-green-500 rounded-full border-4 border-navy-800"></div>
@@ -75,7 +76,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.6 }}
-            className="text-6xl md:text-6xl font-bold mb-4 text-white"
+            className="text-5xl md:text-7xl font-bold mb-4 text-white"
           >
             Augusto Pires Zuanazzi
           </motion.h1>
@@ -97,6 +98,7 @@ export function Hero() {
             transition={{ delay: 0.8, duration: 0.6 }}
             className="flex justify-center gap-4 mb-12 text-sm md:text-base text-white opacity-70"
           >
+            <span className="opacity-70">Estudante de Engenharia de Software</span>
           </motion.div>
 
           {/* CTA Button */}

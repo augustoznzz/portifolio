@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useEffect } from 'react'
+import { createContext, useContext } from 'react'
 
 type Theme = 'light' | 'dark'
 
@@ -12,12 +12,6 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  useEffect(() => {
-    // Sempre usar tema escuro
-    document.documentElement.classList.add('dark')
-    document.body.classList.add('dark')
-  }, [])
-
   // Sempre retornar o Provider com tema escuro
   return (
     <ThemeContext.Provider value={{ theme: 'dark', toggleTheme: () => {} }}>
