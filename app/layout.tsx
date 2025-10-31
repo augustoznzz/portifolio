@@ -4,13 +4,13 @@ import './globals.css'
 import { ThemeProvider } from '@/components/ThemeProvider'
 
 export const metadata: Metadata = {
-  title: 'Portfólio | Desenvolvedor Backend',
-  description: 'Portfólio pessoal de desenvolvedor backend.',
-  keywords: 'desenvolvedor, backend, portfólio, programador, web developer',
+  title: 'Portfólio | Augusto Pires Zuanazzi',
+  description: 'Portfólio pessoal',
+  keywords: 'desenvolvedor, backend, portfólio, programador',
   authors: [{ name: 'Seu Nome' }],
   openGraph: {
-    title: 'Portfólio | Desenvolvedor Backend',
-    description: 'Portfólio pessoal de desenvolvedor backend',
+    title: 'Portfólio | Augusto Pires Zuanazzi',
+    description: 'Portfólio pessoal',
     type: 'website',
   },
 }
