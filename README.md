@@ -61,6 +61,30 @@ O formulário de contato atualmente usa uma simulação. Para integrar com um se
 - **EmailJS**: https://www.emailjs.com/
 - **Netlify Forms**: Configuração automática se estiver usando Netlify
 
+## 🔄 Integração Contínua (CI/CD)
+
+Este projeto possui integração contínua configurada com GitHub Actions. O pipeline executa automaticamente:
+
+- ✅ **Lint**: Verifica erros e problemas de código com ESLint
+- ✅ **Type Check**: Valida tipos TypeScript
+- ✅ **Build**: Compila a aplicação Next.js para produção
+
+### Configuração
+
+A CI está configurada no arquivo `.github/workflows/ci.yml` e executa automaticamente em:
+- Push para branches `main`, `master` ou `develop`
+- Pull requests para essas branches
+
+### Scripts Disponíveis
+
+```bash
+npm run dev        # Desenvolvimento
+npm run build      # Build de produção
+npm run start      # Inicia servidor de produção
+npm run lint       # Executa ESLint
+npm run typecheck  # Verifica tipos TypeScript
+```
+
 ## 🌐 Deploy na Netlify
 
 1. Faça push do código para um repositório Git (GitHub, GitLab, Bitbucket)
@@ -76,6 +100,16 @@ O formulário de contato atualmente usa uma simulação. Para integrar com um se
    Ou simplesmente use o arquivo `netlify.toml` já configurado!
 
 3. Após o deploy, seu site estará disponível!
+
+### Deploy Automático com CI/CD
+
+Para habilitar deploy automático via GitHub Actions (opcional):
+
+1. Adicione os secrets no GitHub:
+   - `NETLIFY_AUTH_TOKEN`: Seu token de autenticação do Netlify
+   - `NETLIFY_SITE_ID`: ID do site Netlify
+
+2. Descomente a seção `deploy` no arquivo `.github/workflows/ci.yml`
 
 ## 📝 Estrutura do Projeto
 
