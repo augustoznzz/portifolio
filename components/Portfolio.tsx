@@ -41,7 +41,7 @@ const projects: Project[] = [
       { name: 'TypeScript', icon: SiTypescript, color: 'text-blue-600' },
       { name: 'React', icon: SiReact, color: 'text-cyan-500' },
     ],
-    githubUrl: 'https://github.com/augustoznzz',
+    githubUrl: 'https://calc-jurosc.netlify.app/',
   },
 ]
 
@@ -305,8 +305,8 @@ export function Portfolio() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-6 py-3 bg-white text-navy-800 rounded-xl font-semibold hover:bg-opacity-90 transition-colors"
                 >
-                  <FiGithub className="w-5 h-5" />
-                  GitHub
+                  <FiExternalLink className="w-5 h-5" />
+                  Link
                 </a>
                 {selectedProject.liveUrl && (
                   <a
