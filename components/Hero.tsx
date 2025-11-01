@@ -86,10 +86,10 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.6 }}
-            className="text-3xl md:text-7xl font-bold mb-4 text-white flex flex-col md:flex-row md:justify-center md:gap-2"
+            className="text-3xl md:text-7xl font-bold mb-4 text-white flex flex-col md:flex-row md:justify-center"
           >
             <span>Augusto</span>
-            <span>Pires</span>
+            <span className="md:-mr-1">Pires</span>
             <span>Zuanazzi</span>
           </motion.h1>
 
