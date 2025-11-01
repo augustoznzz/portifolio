@@ -34,7 +34,7 @@ const projects: Project[] = [
   {
     id: 2,
     title: 'Calculadora de Juros Compostos',
-    description: 'Calculadora completa de juros compostos com gráficos e análise detalhada',
+    description: 'Calculadora completa de juros compostos',
     longDescription: 'Aplicação web completa para cálculo de juros compostos, incluindo visualizações gráficas, tabelas de evolução, cálculo de inflação e análise de rentabilidade. Desenvolvida com TypeScript e React.',
     images: ['/calcc.png', '/calcc2.png', '/calcc3.png'],
     technologies: [
