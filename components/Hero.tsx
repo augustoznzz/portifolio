@@ -7,6 +7,7 @@ import Image from 'next/image'
 
 export function Hero() {
   const [scrollY, setScrollY] = useState(0)
+  const [showButton, setShowButton] = useState(false)
   const heroRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -27,6 +28,13 @@ export function Hero() {
 
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowButton(true)
+    }, 1000)
+    return () => clearTimeout(timer)
   }, [])
 
   const scrollToProjects = useCallback(() => {
@@ -116,21 +124,16 @@ export function Hero() {
           </motion.div>
 
           {/* CTA Button */}
-          <motion.button
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ 
-              delay: 1, 
-              duration: 0.5, 
-              ease: [0.22, 1, 0.36, 1] 
-            }}
+          <button
             onClick={scrollToProjects}
             style={{ touchAction: 'manipulation' }}
-            className="group px-8 py-4 bg-white text-navy-800 rounded-2xl font-semibold shadow-soft hover:shadow-lg transition-all duration-300 hover:scale-105 hover:bg-opacity-90 active:scale-95 will-change-transform md:will-change-auto"
+            className={`group px-8 py-4 bg-white text-navy-800 rounded-2xl font-semibold shadow-soft hover:shadow-lg transition-opacity duration-300 ease-out md:transition-all md:duration-300 md:hover:scale-105 hover:bg-opacity-90 active:scale-95 ${
+              showButton ? 'opacity-100' : 'opacity-0'
+            }`}
           >
             Ver Projetos
             <FiChevronDown className="inline-block ml-2 group-hover:translate-y-1 transition-transform duration-300" />
-          </motion.button>
+          </button>
         </motion.div>
       </div>
 
