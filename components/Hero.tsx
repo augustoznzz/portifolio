@@ -37,68 +37,9 @@ export function Hero() {
   return (
     <section
       ref={heroRef}
-      className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-navy-800 via-navy-800 to-navy-900"
+      className="min-h-screen flex items-center justify-center relative overflow-hidden"
+      style={{ backgroundColor: '#020136' }}
     >
-      {/* 3D Grid Container with subtle perspective */}
-      <div 
-        className="absolute inset-0"
-        style={{
-          perspective: '2000px',
-          perspectiveOrigin: '50% 50%',
-          transformStyle: 'preserve-3d',
-        }}
-      >
-        {/* Back layer - Subtle depth */}
-        <div 
-          className="absolute inset-0 opacity-[0.06]"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(94, 179, 246, 0.12) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(94, 179, 246, 0.12) 1px, transparent 1px)
-            `,
-            backgroundSize: '60px 60px',
-            transform: 'translateZ(-120px) rotateX(8deg) rotateY(-2deg)',
-            transformOrigin: 'center center',
-            animation: 'grid3DMove 40s linear infinite reverse',
-            maskImage: 'radial-gradient(ellipse 80% 50% at 50% 0%, black 70%, transparent 110%)',
-            WebkitMaskImage: 'radial-gradient(ellipse 80% 50% at 50% 0%, black 70%, transparent 110%)',
-          }}
-        />
-        
-        {/* Middle layer - Depth */}
-        <div 
-          className="absolute inset-0 opacity-[0.08]"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(94, 179, 246, 0.15) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(94, 179, 246, 0.15) 1px, transparent 1px)
-            `,
-            backgroundSize: '60px 60px',
-            transform: 'translateZ(-60px) rotateX(6deg) rotateY(-1deg)',
-            transformOrigin: 'center center',
-            animation: 'grid3DMove 35s linear infinite',
-            maskImage: 'radial-gradient(ellipse 80% 50% at 50% 0%, black 70%, transparent 110%)',
-            WebkitMaskImage: 'radial-gradient(ellipse 80% 50% at 50% 0%, black 70%, transparent 110%)',
-          }}
-        />
-        
-        {/* Front layer - Main grid */}
-        <div 
-          className="absolute inset-0 opacity-[0.1]"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(94, 179, 246, 0.18) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(94, 179, 246, 0.18) 1px, transparent 1px)
-            `,
-            backgroundSize: '60px 60px',
-            transform: 'translateZ(3px) rotateX(4deg) rotateY(-0.5deg)',
-            transformOrigin: 'center center',
-            maskImage: 'radial-gradient(ellipse 80% 50% at 50% 0%, black 70%, transparent 110%)',
-            WebkitMaskImage: 'radial-gradient(ellipse 80% 50% at 50% 0%, black 70%, transparent 110%)',
-          }}
-        />
-      </div>
-
       {/* Parallax background elements */}
       <div
         className="absolute inset-0 opacity-10"

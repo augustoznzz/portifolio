@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, AnimatePresence, useInView } from 'framer-motion'
-import { useRef, useState } from 'react'
+import { useRef, useState, useCallback, useMemo } from 'react'
 import { FiExternalLink, FiGithub, FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 import { SiTypescript, SiHtml5, SiReact } from 'react-icons/si'
 import Image from 'next/image'
@@ -51,22 +51,53 @@ export function Portfolio() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
-  const nextImage = () => {
+  const nextImage = useCallback(() => {
     if (selectedProject) {
       setCurrentImageIndex((prev) => (prev + 1) % selectedProject.images.length)
     }
-  }
+  }, [selectedProject])
 
-  const prevImage = () => {
+  const prevImage = useCallback(() => {
     if (selectedProject) {
       setCurrentImageIndex((prev) => (prev - 1 + selectedProject.images.length) % selectedProject.images.length)
     }
-  }
+  }, [selectedProject])
 
-  const handleProjectSelect = (project: Project) => {
+  const handleProjectSelect = useCallback((project: Project) => {
     setSelectedProject(project)
     setCurrentImageIndex(0)
-  }
+  }, [])
+
+  // Pré-carrega as imagens adjacentes para melhor performance
+  const preloadImages = useMemo(() => {
+    if (!selectedProject) return []
+    const imagesToPreload: string[] = []
+    const prevIndex = (currentImageIndex - 1 + selectedProject.images.length) % selectedProject.images.length
+    const nextIndex = (currentImageIndex + 1) % selectedProject.images.length
+    imagesToPreload.push(selectedProject.images[prevIndex])
+    imagesToPreload.push(selectedProject.images[nextIndex])
+    return imagesToPreload
+  }, [selectedProject, currentImageIndex])
+
+  const handlePrevClick = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation()
+    prevImage()
+  }, [prevImage])
+
+  const handleNextClick = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation()
+    nextImage()
+  }, [nextImage])
+
+  const handleIndicatorClick = useCallback((index: number, e: React.MouseEvent) => {
+    e.stopPropagation()
+    setCurrentImageIndex(index)
+  }, [])
+
+  const handleCloseModal = useCallback(() => {
+    setSelectedProject(null)
+    setCurrentImageIndex(0)
+  }, [])
 
   return (
     <>
@@ -155,16 +186,31 @@ export function Portfolio() {
             className="bg-navy-800 rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
           >
             <div className="relative">
+              {/* Pré-carregamento de imagens adjacentes */}
+              <div className="hidden">
+                {preloadImages.map((img, idx) => (
+                  <Image
+                    key={`preload-${idx}`}
+                    src={img}
+                    alt=""
+                    width={768}
+                    height={384}
+                    priority
+                    loading="eager"
+                  />
+                ))}
+              </div>
+
               {/* Carrossel de Imagens */}
               <div className="relative h-96 overflow-hidden rounded-t-2xl">
-                <AnimatePresence mode="wait">
+                <AnimatePresence>
                   <motion.div
                     key={currentImageIndex}
-                    initial={{ opacity: 0, x: 50 }}
+                    initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -50 }}
-                    transition={{ duration: 0.3 }}
-                    className="relative w-full h-full bg-navy-900"
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.15, ease: 'easeOut' }}
+                    className="relative w-full h-full bg-navy-900 will-change-transform"
                   >
                     <Image
                       src={selectedProject.images[currentImageIndex]}
@@ -172,6 +218,7 @@ export function Portfolio() {
                       fill
                       sizes="(max-width: 768px) 100vw, 768px"
                       className="object-contain"
+                      priority
                       loading="eager"
                     />
                   </motion.div>
@@ -181,20 +228,16 @@ export function Portfolio() {
                 {selectedProject.images.length > 1 && (
                   <>
                     <button
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        prevImage()
-                      }}
+                      onClick={handlePrevClick}
                       className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-navy-700/80 hover:bg-navy-700 shadow-lg flex items-center justify-center text-white transition-all hover:scale-110 z-10"
+                      aria-label="Imagem anterior"
                     >
                       <FiChevronLeft className="w-5 h-5" />
                     </button>
                     <button
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        nextImage()
-                      }}
+                      onClick={handleNextClick}
                       className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-navy-700/80 hover:bg-navy-700 shadow-lg flex items-center justify-center text-white transition-all hover:scale-110 z-10"
+                      aria-label="Próxima imagem"
                     >
                       <FiChevronRight className="w-5 h-5" />
                     </button>
@@ -207,15 +250,13 @@ export function Portfolio() {
                     {selectedProject.images.map((_, index) => (
                       <button
                         key={index}
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          setCurrentImageIndex(index)
-                        }}
+                        onClick={(e) => handleIndicatorClick(index, e)}
                         className={`w-2 h-2 rounded-full transition-all ${
                           index === currentImageIndex
                             ? 'bg-white w-8'
                             : 'bg-white/50 hover:bg-white/75'
                         }`}
+                        aria-label={`Ir para imagem ${index + 1}`}
                       />
                     ))}
                   </div>
@@ -223,11 +264,9 @@ export function Portfolio() {
 
                 {/* Botão Fechar */}
                 <button
-                  onClick={() => {
-                    setSelectedProject(null)
-                    setCurrentImageIndex(0)
-                  }}
+                  onClick={handleCloseModal}
                   className="absolute top-4 right-4 w-10 h-10 rounded-full bg-navy-700/80 hover:bg-navy-700 shadow-lg flex items-center justify-center text-white hover:scale-110 transition-transform z-10"
+                  aria-label="Fechar modal"
                 >
                   ×
                 </button>
