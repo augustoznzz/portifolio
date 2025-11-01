@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { FiChevronDown } from 'react-icons/fi'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import Image from 'next/image'
 
 export function Hero() {
@@ -29,10 +29,12 @@ export function Hero() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const scrollToProjects = () => {
+  const scrollToProjects = useCallback(() => {
     const projectsSection = document.getElementById('projetos')
-    projectsSection?.scrollIntoView({ behavior: 'smooth' })
-  }
+    if (projectsSection) {
+      projectsSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }, [])
 
   return (
     <section
@@ -117,12 +119,17 @@ export function Hero() {
           <motion.button
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1, duration: 0.6 }}
+            transition={{ 
+              delay: 1, 
+              duration: 0.5, 
+              ease: [0.22, 1, 0.36, 1] 
+            }}
             onClick={scrollToProjects}
-            className="group px-8 py-4 bg-white text-navy-800 rounded-2xl font-semibold shadow-soft hover:shadow-lg transition-all duration-300 hover:scale-105 hover:bg-opacity-90"
+            style={{ touchAction: 'manipulation' }}
+            className="group px-8 py-4 bg-white text-navy-800 rounded-2xl font-semibold shadow-soft hover:shadow-lg transition-all duration-300 hover:scale-105 hover:bg-opacity-90 active:scale-95 will-change-transform md:will-change-auto"
           >
             Ver Projetos
-            <FiChevronDown className="inline-block ml-2 group-hover:translate-y-1 transition-transform" />
+            <FiChevronDown className="inline-block ml-2 group-hover:translate-y-1 transition-transform duration-300" />
           </motion.button>
         </motion.div>
       </div>
