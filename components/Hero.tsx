@@ -87,7 +87,7 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.6 }}
             className="text-3xl md:text-7xl font-bold mb-4 text-white md:tracking-normal"
-            style={{ wordSpacing: '0.5em' }}
+            style={{ wordSpacing: '0.25em' }}
           >
             Augusto Pires Zuanazzi
           </motion.h1>
