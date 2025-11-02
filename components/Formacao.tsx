@@ -30,7 +30,7 @@ const educations: Education[] = [
   },
 ]
 
-export function Formacao() {
+export default function Formacao() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
 

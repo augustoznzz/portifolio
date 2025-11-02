@@ -45,7 +45,7 @@ const projects: Project[] = [
   },
 ]
 
-export function Portfolio() {
+export default function Portfolio() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)

@@ -5,7 +5,7 @@ import { useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
 import { FiSend, FiGithub, FiLinkedin } from 'react-icons/fi'
 
-export function Contact() {
+export default function Contact() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
   const [formData, setFormData] = useState({

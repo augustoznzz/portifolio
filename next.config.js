@@ -14,6 +14,11 @@ const nextConfig = {
   experimental: {
     optimizeCss: true,
   },
+  // Ensure error components are properly handled
+  onDemandEntries: {
+    maxInactiveAge: 25 * 1000,
+    pagesBufferLength: 2,
+  },
 }
 
 module.exports = nextConfig

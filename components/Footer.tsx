@@ -1,19 +1,25 @@
 'use client'
 
 import { FiArrowUp } from 'react-icons/fi'
+import { useState, useEffect } from 'react'
 
-export function Footer() {
+export default function Footer() {
+  const [currentYear, setCurrentYear] = useState<number>(2024)
+
+  useEffect(() => {
+    // Calcular o ano apenas no cliente após a hidratação
+    setCurrentYear(new Date().getFullYear())
+  }, [])
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
-
-  const currentYear = new Date().getFullYear()
 
   return (
     <footer className="py-8 bg-navy-950 text-white transition-colors">
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-sm">
+          <p className="text-sm" suppressHydrationWarning>
             © {currentYear} Augusto Pires Zuanazzi. Todos os direitos reservados.
           </p>
           <button

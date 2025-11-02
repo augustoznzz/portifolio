@@ -5,12 +5,20 @@ import { FiChevronDown } from 'react-icons/fi'
 import { useEffect, useRef, useState, useCallback } from 'react'
 import Image from 'next/image'
 
-export function Hero() {
+export default function Hero() {
   const [scrollY, setScrollY] = useState(0)
   const [showButton, setShowButton] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
   const heroRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    // Marcar como montado após a hidratação
+    setIsMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (!isMounted) return
+
     let ticking = false
     
     const handleScroll = () => {
@@ -28,14 +36,16 @@ export function Hero() {
 
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [isMounted])
 
   useEffect(() => {
+    if (!isMounted) return
+
     const timer = setTimeout(() => {
       setShowButton(true)
     }, 1000)
     return () => clearTimeout(timer)
-  }, [])
+  }, [isMounted])
 
   const scrollToProjects = useCallback(() => {
     const projectsSection = document.getElementById('projetos')
@@ -50,12 +60,13 @@ export function Hero() {
       className="min-h-screen flex items-center justify-center relative overflow-hidden"
       style={{ backgroundColor: '#020136' }}
     >
-      {/* Parallax background elements */}
+      {/* Parallax background elements - Usar suppressHydrationWarning para evitar mismatch */}
       <div
         className="absolute inset-0 opacity-10"
         style={{
           transform: `translateY(${scrollY}px)`,
         }}
+        suppressHydrationWarning
       >
         <div className="absolute top-20 left-10 w-72 h-72 bg-accent-light rounded-full blur-3xl"></div>
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-navy-300 rounded-full blur-3xl"></div>
@@ -130,6 +141,7 @@ export function Hero() {
             className={`group px-8 py-4 bg-white text-navy-800 rounded-2xl font-semibold shadow-soft hover:shadow-lg transition-opacity duration-300 ease-out md:transition-all md:duration-300 md:hover:scale-105 hover:bg-opacity-90 active:scale-95 ${
               showButton ? 'opacity-100' : 'opacity-0'
             }`}
+            suppressHydrationWarning
           >
             Ver Projetos
             <FiChevronDown className="inline-block ml-2 group-hover:translate-y-1 transition-transform duration-300" />
@@ -143,6 +155,7 @@ export function Hero() {
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, repeat: Infinity, duration: 2 }}
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        suppressHydrationWarning
       >
         <FiChevronDown className="w-6 h-6 text-white opacity-70 animate-bounce" />
       </motion.div>

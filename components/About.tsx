@@ -17,7 +17,7 @@ const skills = [
   { name: 'Git', icon: SiGit, color: 'text-orange-500' },
 ]
 
-export function About() {
+export default function About() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
 
