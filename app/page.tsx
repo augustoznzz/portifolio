@@ -6,6 +6,11 @@ const About = dynamic(() => import('@/components/About').then(mod => ({ default:
   loading: () => <div className="py-20 md:py-32 bg-navy-800" />,
 })
 
+const Formacao = dynamic(() => import('@/components/Formacao').then(mod => ({ default: mod.Formacao })), {
+  loading: () => <div className="py-20 md:py-32 bg-navy-800" />,
+  ssr: false,
+})
+
 const Portfolio = dynamic(() => import('@/components/Portfolio').then(mod => ({ default: mod.Portfolio })), {
   loading: () => <div className="py-20 md:py-32 bg-navy-900" />,
 })
@@ -23,6 +28,7 @@ export default function Home() {
     <main className="min-h-screen">
       <Hero />
       <About />
+      <Formacao />
       <Portfolio />
       <Contact />
       <Footer />
