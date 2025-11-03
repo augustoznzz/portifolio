@@ -13,10 +13,7 @@ import {
   SiFlask,
   SiExpress,
   SiFastapi,
-  SiGithub,
-  SiOpenai,
-  SiTensorflow,
-  SiPytorch
+  SiGithub
 } from 'react-icons/si'
 import { FiChevronDown } from 'react-icons/fi'
 
@@ -58,12 +55,6 @@ const skills = [
     name: 'GitHub', 
     icon: SiGithub, 
     color: 'text-gray-300',
-    frameworks: []
-  },
-  { 
-    name: 'IA', 
-    icon: SiOpenai, 
-    color: 'text-white',
     frameworks: []
   },
 ]
@@ -201,9 +192,9 @@ export default function About() {
               })}
             </div>
 
-            {/* Second Row - GitHub, IA */}
-            <div className="grid grid-cols-2 gap-6 max-w-md mx-auto">
-              {skills.slice(4, 6).map((skill, index) => {
+            {/* Second Row - GitHub */}
+            <div className="grid grid-cols-1 gap-6 max-w-xs mx-auto">
+              {skills.slice(4, 5).map((skill, index) => {
                 const actualIndex = index + 4
                 const Icon = skill.icon
                 const isSelected = selectedSkill === actualIndex
