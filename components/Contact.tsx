@@ -23,7 +23,7 @@ export default function Contact() {
 
     try {
       // Dynamic import of EmailJS only when form is submitted
-      const emailjs = (await import('@emailjs/browser')).default
+      const { default: emailjs } = await import('@emailjs/browser')
       
       const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || ''
       const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || ''
