@@ -12,7 +12,11 @@ import {
   SiDjango,
   SiFlask,
   SiExpress,
-  SiFastapi
+  SiFastapi,
+  SiGithub,
+  SiOpenai,
+  SiTensorflow,
+  SiPytorch
 } from 'react-icons/si'
 import { FiChevronDown } from 'react-icons/fi'
 
@@ -51,6 +55,18 @@ const skills = [
     frameworks: [
       { name: 'GitHub', icon: SiGit, color: 'text-gray-300' },
     ]
+  },
+  { 
+    name: 'GitHub', 
+    icon: SiGithub, 
+    color: 'text-gray-300',
+    frameworks: []
+  },
+  { 
+    name: 'IA', 
+    icon: SiOpenai, 
+    color: 'text-white',
+    frameworks: []
   },
 ]
 
@@ -97,7 +113,7 @@ export default function About() {
             className="mb-12"
           >
             <h3 className="text-4xl md:text-5xl font-bold mb-6 text-center text-white">
-              Linguagens
+              Linguagens & Tecnologias
             </h3>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
               {skills.map((skill, index) => {
@@ -156,7 +172,7 @@ export default function About() {
             </div>
 
             {/* Frameworks Section */}
-            {selectedSkill !== null && (
+            {selectedSkill !== null && skills[selectedSkill].frameworks.length > 0 && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
