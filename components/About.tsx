@@ -52,9 +52,7 @@ const skills = [
     name: 'Git', 
     icon: SiGit, 
     color: 'text-orange-500',
-    frameworks: [
-      { name: 'GitHub', icon: SiGit, color: 'text-gray-300' },
-    ]
+    frameworks: []
   },
   { 
     name: 'GitHub', 
@@ -115,8 +113,9 @@ export default function About() {
             <h3 className="text-4xl md:text-5xl font-bold mb-6 text-center text-white">
               Linguagens & Tecnologias
             </h3>
+            {/* First Row - Python, Node.js, Golang, Git */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-              {skills.map((skill, index) => {
+              {skills.slice(0, 4).map((skill, index) => {
                 const Icon = skill.icon
                 const isSelected = selectedSkill === index
                 return (
@@ -166,44 +165,130 @@ export default function About() {
                         className="w-0.5 h-6 bg-gradient-to-b from-white/40 to-transparent origin-top"
                       />
                     )}
+
+                    {/* Frameworks Section - Individual */}
+                    {isSelected && skill.frameworks.length > 0 && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.3 }}
+                        className="mt-2 w-full"
+                      >
+                        <div className="flex flex-col gap-2">
+                          {skill.frameworks.map((framework, fIndex) => {
+                            const FrameworkIcon = framework.icon
+                            return (
+                              <motion.div
+                                key={framework.name}
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ delay: fIndex * 0.1, duration: 0.3 }}
+                                className="flex items-center p-3 rounded-lg bg-navy-600 transition-colors duration-300"
+                              >
+                                <FrameworkIcon className={`w-4 h-4 ${framework.color} mr-2`} />
+                                <span className="text-xs font-medium text-white">
+                                  {framework.name}
+                                </span>
+                              </motion.div>
+                            )
+                          })}
+                        </div>
+                      </motion.div>
+                    )}
                   </motion.div>
                 )
               })}
             </div>
 
-            {/* Frameworks Section */}
-            {selectedSkill !== null && skills[selectedSkill].frameworks.length > 0 && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3 }}
-                className="mt-8"
-              >
-                <h4 className="text-xl font-semibold mb-4 text-center text-white">
-                  Frameworks & Tools
-                </h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-md mx-auto">
-                  {skills[selectedSkill].frameworks.map((framework, fIndex) => {
-                    const FrameworkIcon = framework.icon
-                    return (
+            {/* Second Row - GitHub, IA */}
+            <div className="grid grid-cols-2 gap-6 max-w-md mx-auto">
+              {skills.slice(4, 6).map((skill, index) => {
+                const actualIndex = index + 4
+                const Icon = skill.icon
+                const isSelected = selectedSkill === actualIndex
+                return (
+                  <motion.div
+                    key={skill.name}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+                    transition={{ delay: 0.7 + index * 0.1, duration: 0.4 }}
+                    className="relative flex flex-col items-center"
+                  >
+                    {/* Skill Card */}
+                    <div className="flex flex-col items-center p-6 rounded-2xl bg-navy-700 hover:shadow-soft transition-all duration-300 hover:scale-105 w-full">
+                      <Icon className={`w-10 h-10 ${skill.color} mb-2`} />
+                      <span className="text-sm font-medium text-white">
+                        {skill.name}
+                      </span>
+                    </div>
+                    
+                    {/* Arrow Button */}
+                    <motion.button
+                      onClick={() => setSelectedSkill(selectedSkill === actualIndex ? null : actualIndex)}
+                      className={`mt-2 p-2 rounded-full transition-all duration-300 hover:scale-110 ${
+                        isSelected 
+                          ? 'bg-white/20 shadow-lg' 
+                          : 'bg-navy-600 hover:bg-navy-500'
+                      }`}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
                       <motion.div
-                        key={framework.name}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: fIndex * 0.1, duration: 0.3 }}
-                        className="flex items-center p-4 rounded-xl bg-navy-600 transition-colors duration-300"
+                        animate={{ 
+                          rotate: isSelected ? 180 : 0,
+                          color: isSelected ? '#ffffff' : '#94a3b8'
+                        }}
+                        transition={{ duration: 0.3 }}
                       >
-                        <FrameworkIcon className={`w-6 h-6 ${framework.color} mr-3`} />
-                        <span className="text-sm font-medium text-white">
-                          {framework.name}
-                        </span>
+                        <FiChevronDown className="w-4 h-4" />
                       </motion.div>
-                    )
-                  })}
-                </div>
-              </motion.div>
-            )}
+                    </motion.button>
+
+                    {/* Connecting Line */}
+                    {isSelected && (
+                      <motion.div
+                        initial={{ scaleY: 0 }}
+                        animate={{ scaleY: 1 }}
+                        exit={{ scaleY: 0 }}
+                        className="w-0.5 h-6 bg-gradient-to-b from-white/40 to-transparent origin-top"
+                      />
+                    )}
+
+                    {/* Frameworks Section - Individual */}
+                    {isSelected && skill.frameworks.length > 0 && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.3 }}
+                        className="mt-2 w-full"
+                      >
+                        <div className="flex flex-col gap-2">
+                          {skill.frameworks.map((framework, fIndex) => {
+                            const FrameworkIcon = framework.icon
+                            return (
+                              <motion.div
+                                key={framework.name}
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ delay: fIndex * 0.1, duration: 0.3 }}
+                                className="flex items-center p-3 rounded-lg bg-navy-600 transition-colors duration-300"
+                              >
+                                <FrameworkIcon className={`w-4 h-4 ${framework.color} mr-2`} />
+                                <span className="text-xs font-medium text-white">
+                                  {framework.name}
+                                </span>
+                              </motion.div>
+                            )
+                          })}
+                        </div>
+                      </motion.div>
+                    )}
+                  </motion.div>
+                )
+              })}
+            </div>
           </motion.div>
         </motion.div>
       </div>
